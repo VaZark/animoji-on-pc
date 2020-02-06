@@ -5,7 +5,7 @@ import imutils
 import time
 import dlib
 import cv2
-from createFace import drawface
+import gtest
 
 # Args
 shape_predictor = "shape_predictor_68_face_landmarks.dat"
@@ -17,6 +17,10 @@ predictor = dlib.shape_predictor(shape_predictor)
 # Start camera
 vs = VideoStream().start()
 time.sleep(2.0)
+
+# Start animation env
+animation_window = gtest.create_animation_window()
+animation_canvas = gtest.create_animation_canvas(animation_window)
 
 # loop over the frames from the video stream
 while True:
@@ -41,8 +45,13 @@ while True:
         # and draw them on the image
         for (x, y) in shape:
             cv2.circle(frame, (x, y), 1, (0, 0, 255), -1)
-
-        drawface(shape)
+        
+        # Debug video stream
+        # print("START \n START")
+        # print(shape)
+        # print("END \n END")
+        # print(type(shape))
+        # gtest.draw_face(animation_window, animation_canvas, shape)
 
         # show the frame
         cv2.imshow("Prediction View", frame)

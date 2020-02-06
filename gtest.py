@@ -3,68 +3,65 @@ import time
 from dlib_68_ref import refShape
 
 # width of the animation window
-animation_window_width = 600
+animation_window_width = 800
 # height of the animation window
-animation_window_height = 600
+animation_window_height = 800
 # delay between successive frames in seconds
-animation_refresh_seconds = 0.2
+animation_refresh_seconds = 2
 
 # The main window of the animation
-
-
 def create_animation_window():
     window = tkinter.Tk()
     window.title("Render Face")
-    # Uses python 3.6+ string interpolation
     window.geometry(f'{animation_window_width}x{animation_window_height}')
     return window
 
 # Create a canvas for animation and add it to main window
-
-
 def create_animation_canvas(window):
     canvas = tkinter.Canvas(window)
-    canvas.configure(bg="blue")
+    canvas.configure(bg="white")
     canvas.pack(fill="both", expand=True)
     return canvas
 
 # Draw the face and save to file
 # or actively stream the data to this screen
 def draw_face(window, canvas, shape):
-    # Split Contours of the face
-    j_shape = shape[0:17]
-    rb_shape = shape[17:22]
-    lb_shape = shape[22:27]
-    n_shape = shape[27:35]
-    re_shape = shape[35:42]
-    le_shape = shape[42:48]
-    m_shape = shape[48:68]
+
+    canvas.delete("all")
 
     # Draw Right eye
-    tleft_x, _ = shape[37]
-    _ , tleft_y = shape[38]
+    canvas.create_polygon(shape[36:42],fill="white", outline="black")
+    window.update()
+
+    # Draw nose
+    canvas.create_line(shape[27:31])
+    canvas.create_line(shape[31:36])
+    window.update()
+
+    # Draw Left Eye
+    canvas.create_polygon(shape[42:48],fill="white", outline="black")
+    window.update()
+
+    # Draw eyebrows
+    canvas.create_line(shape[17:22])
+    canvas.create_line(shape[22:27])
     
-    bright_x, _ = shape[40]
-    _ , bright_y = shape[41]
-    c = canvas.create_oval(tleft_x, tleft_y, bright_x, bright_y)
+    # Draw lips
+    canvas.create_polygon(shape[48:60],fill="white", outline="black")
+    canvas.create_polygon(shape[60:68],fill="white", outline="black")
     window.update()
-    time.sleep(animation_refresh_seconds)
-    canvas.delete("all")
-    c = canvas.create_oval(tleft_x+30, tleft_y, bright_x, bright_y)
+
+    # Draw Jaw
+    canvas.create_line(shape[0:17])
     window.update()
+
     time.sleep(animation_refresh_seconds)
 
     # window.mainloop()
 
 
-# The actual execution starts here
+# Testing
 animation_window = create_animation_window()
 animation_canvas = create_animation_canvas(animation_window)
 draw_face(animation_window, animation_canvas, refShape)
 
-# # PIL create an empty image and draw object to draw on memory only, not visible
-# image1 = Image.new("RGB", (animation_window_width, animation_window_height), "white")
-# draw = ImageDraw.Draw(image1)
-# dra.create_oval(tleft_x, tleft_y, bright_x, bright_y)
-# filename = "test.jpg"
-# image1.save(filename)
