@@ -5,13 +5,14 @@ import imutils
 import time
 import dlib
 import cv2
+from createFace import drawface
 
 # Args
-shape_predictor = "arg1"
+shape_predictor = "shape_predictor_68_face_landmarks.dat"
 
 # Facial Detector initialization : set the shape to predict
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+predictor = dlib.shape_predictor(shape_predictor)
 
 # Start camera
 vs = VideoStream().start()
@@ -40,6 +41,8 @@ while True:
         # and draw them on the image
         for (x, y) in shape:
             cv2.circle(frame, (x, y), 1, (0, 0, 255), -1)
+
+        drawface(shape)
 
         # show the frame
         cv2.imshow("Prediction View", frame)
