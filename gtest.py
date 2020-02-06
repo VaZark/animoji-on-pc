@@ -1,5 +1,5 @@
 import tkinter
-import time
+# import Image
 from dlib_68_ref import refShape
 
 # width of the animation window
@@ -54,14 +54,14 @@ def draw_face(window, canvas, shape):
     # Draw Jaw
     canvas.create_line(shape[0:17])
     window.update()
-
-    time.sleep(animation_refresh_seconds)
-
-    # window.mainloop()
+    
+    # # Save Image
+    # ps = canvas.postscript(colormode='color')
+    # img = Image.open(io.BytesIO(ps.encode('utf-8')))
+    # img.save('/tmp/images/test.jpg')
 
 
 # Testing
-animation_window = create_animation_window()
-animation_canvas = create_animation_canvas(animation_window)
-draw_face(animation_window, animation_canvas, refShape)
-
+# animation_window = create_animation_window()
+# animation_canvas = create_animation_canvas(animation_window)
+# draw_face(animation_window, animation_canvas, refShape)

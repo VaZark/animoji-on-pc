@@ -43,15 +43,12 @@ while True:
         shape = face_utils.shape_to_np(shape)
         # loop over the (x, y)-coordinates for the facial landmarks
         # and draw them on the image
+        flatShapeArr = []
         for (x, y) in shape:
             cv2.circle(frame, (x, y), 1, (0, 0, 255), -1)
-        
-        # Debug video stream
-        # print("START \n START")
-        # print(shape)
-        # print("END \n END")
-        # print(type(shape))
-        # gtest.draw_face(animation_window, animation_canvas, shape)
+            flatShapeArr.append([x,y])
+            
+        gtest.draw_face(animation_window, animation_canvas, flatShapeArr)
 
         # show the frame
         cv2.imshow("Prediction View", frame)
